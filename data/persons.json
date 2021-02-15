@@ -1,0 +1,20 @@
+[
+    {
+        "id": "a123",
+        "cnp": "1870109260036",
+        "firstName": "Cristian",
+        "lastName": "Cozma"
+    },
+    {
+        "id": "b456",
+        "cnp": "2901112265544",
+        "firstName": "Reka",
+        "lastName": "Kovacs"
+    },
+    {
+        "id": "c789",
+        "cnp": "29001212254433",
+        "firstName": "Simona",
+        "lastName": "Glodean"
+    }
+]

@@ -11,7 +11,7 @@ const pool = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "",
-  database: "teams"
+  database: "docsgenerator"
 });
 
 /**
@@ -21,7 +21,7 @@ router.get("/install", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
     const sql = `
-    CREATE TABLE IF NOT EXISTS members (id INT NOT NULL AUTO_INCREMENT, firstName TEXT NOT NULL, lastName TEXT NOT NULL, gitHub TEXT NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
+    CREATE TABLE IF NOT EXISTS persons (id INT NOT NULL AUTO_INCREMENT, cnp TEXT NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
     `;
     connection.query(sql, function (err, results) {
       if (err) throw err;
@@ -37,7 +37,7 @@ router.get("/install", function (req, res, next) {
 router.get("/", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT id, firstName, lastName, gitHub FROM members`;
+    const sql = `SELECT id, cnp, firstName, lastName FROM persons`;
     connection.query(sql, function (err, results) {
       if (err) throw err;
       connection.release();
@@ -50,14 +50,14 @@ router.get("/", function (req, res, next) {
  *
  */
 router.post("/create", function (req, res, next) {
+  const cnp = req.body.cnp;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
-  const gitHub = req.body.gitHub;
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `INSERT INTO members (id, firstName, lastName, gitHub) VALUES (NULL, ?, ?, ?);`;
-    connection.query(sql, [firstName, lastName, gitHub], function (err, results) {
+    const sql = `INSERT INTO persons (cnp, firstName, lastName) VALUES (${cnp}, ${firstName}, ${lastName});`;
+    connection.query(sql, [cnp, firstName, lastName], function (err, results) {
       if (err) throw err;
       const id = results.insertId;
       connection.release();
