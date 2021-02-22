@@ -37,8 +37,21 @@ router.get("/install", function (req, res, next) {
 router.get("/", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT id, cnp, firstName, lastName FROM persons`;
+    const sql = `SELECT id, cnp, firstName, lastName FROM persons  limit 10`;
     connection.query(sql, function (err, results) {
+      if (err) throw err;
+      connection.release();
+      res.json(results);
+    });
+  });
+});
+
+router.get("/person", function (req, res, next) {
+  const cnp = req.query.cnp;
+  pool.getConnection(function (err, connection) {
+    if (err) throw err;
+    const sql = `SELECT id, cnp, firstName, lastName FROM persons WHERE cnp=?`;
+    connection.query(sql, [cnp], function (err, results) {
       if (err) throw err;
       connection.release();
       res.json(results);
