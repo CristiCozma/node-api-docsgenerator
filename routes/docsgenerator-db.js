@@ -50,7 +50,7 @@ router.get("/person", function (req, res, next) {
   const cnp = req.query.cnp;
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT id, cnp, firstName, lastName FROM persons WHERE cnp=?`;
+    const sql = `SELECT * FROM persons WHERE cnp=?`;
     connection.query(sql, [cnp], function (err, results) {
       if (err) throw err;
       connection.release();
