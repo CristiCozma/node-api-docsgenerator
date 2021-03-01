@@ -103,15 +103,14 @@ router.delete("/delete", function (req, res, next) {
  *
  */
 router.put("/update", function (req, res, next) {
-  const id = req.body.id;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
-  const gitHub = req.body.gitHub;
+  const cnp = req.body.cnp;
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `UPDATE members SET firstName=?, lastName=?, gitHub=? WHERE id=?`;
-    connection.query(sql, [firstName, lastName, gitHub, id], function (err, results) {
+    const sql = `UPDATE persons SET firstName='${firstName}', lastName='${lastName}' WHERE cnp='${cnp}'`;
+    connection.query(sql, [firstName, lastName, cnp], function (err, results) {
       if (err) throw err;
       connection.release();
       res.json({ success: true });
