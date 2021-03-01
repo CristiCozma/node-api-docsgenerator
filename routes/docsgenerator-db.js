@@ -69,7 +69,7 @@ router.post("/create", function (req, res, next) {
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `INSERT INTO persons (cnp, firstName, lastName) VALUES (${cnp}, ${firstName}, ${lastName});`;
+    const sql = `INSERT INTO persons (cnp, firstName, lastName) VALUES (${cnp}, '${firstName}', '${lastName}');`;
     connection.query(sql, [cnp, firstName, lastName], function (err, results) {
       if (err) throw err;
       const id = results.insertId;
