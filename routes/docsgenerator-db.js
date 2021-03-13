@@ -21,7 +21,7 @@ router.get("/install", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
     const sql = `
-    CREATE TABLE IF NOT EXISTS persons (id INT NOT NULL AUTO_INCREMENT, cnp TEXT NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
+    CREATE TABLE IF NOT EXISTS persons (id INT NOT NULL AUTO_INCREMENT, cnp TEXT NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, localitate TEXT NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
     `;
     connection.query(sql, function (err, results) {
       if (err) throw err;
@@ -37,7 +37,7 @@ router.get("/install", function (req, res, next) {
 router.get("/", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT id, cnp, firstName, lastName FROM persons  limit 10`;
+    const sql = `SELECT id, cnp, firstName, lastName, localitate FROM persons  limit 10`;
     connection.query(sql, function (err, results) {
       if (err) throw err;
       connection.release();
@@ -66,11 +66,12 @@ router.post("/create", function (req, res, next) {
   const cnp = req.body.cnp;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
+  const localitate = req.body.localitate;
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `INSERT INTO persons (cnp, firstName, lastName) VALUES (${cnp}, '${firstName}', '${lastName}');`;
-    connection.query(sql, [cnp, firstName, lastName], function (err, results) {
+    const sql = `INSERT INTO persons (cnp, firstName, lastName, localitate) VALUES (${cnp}, '${firstName}', '${lastName}', '${localitate}');`;
+    connection.query(sql, [cnp, firstName, lastName, localitate], function (err, results) {
       if (err) throw err;
       const id = results.insertId;
       connection.release();
@@ -106,11 +107,12 @@ router.put("/update", function (req, res, next) {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const cnp = req.body.cnp;
+  const localitate = req.body.localitate;
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `UPDATE persons SET firstName='${firstName}', lastName='${lastName}' WHERE cnp='${cnp}'`;
-    connection.query(sql, [firstName, lastName, cnp], function (err, results) {
+    const sql = `UPDATE persons SET firstName='${firstName}', lastName='${lastName}', localitate='${localitate}' WHERE cnp='${cnp}'`;
+    connection.query(sql, [firstName, lastName, cnp, localitate], function (err, results) {
       if (err) throw err;
       connection.release();
       res.json({ success: true });

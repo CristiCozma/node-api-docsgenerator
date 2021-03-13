@@ -3,18 +3,21 @@
         "id": "a123",
         "cnp": "1870109260036",
         "firstName": "Cristian",
-        "lastName": "Cozma"
+        "lastName": "Cozma",
+        "localitate": "Ploiesti"
     },
     {
         "id": "b456",
         "cnp": "2901112265544",
         "firstName": "Reka",
-        "lastName": "Kovacs"
+        "lastName": "Kovacs",
+        "localitate": "Borsec"
     },
     {
         "id": "c789",
         "cnp": "29001212254433",
         "firstName": "Simona",
-        "lastName": "Glodean"
+        "lastName": "Glodean",
+        "localitate": "Oradea"
     }
 ]
