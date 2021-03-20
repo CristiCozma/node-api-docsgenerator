@@ -39,7 +39,7 @@ router.get("/populate", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
     const sql = `
-    INSERT INTO persons2 (id, cnp, firstName, lastName, localitate, numar, email, telefon) VALUES (NULL, '1870109260036', 'Cristian', 'Cozma', 'Cluj-Napoca', '32', 'test@gmail.com', '0547821458'), (NULL, '2901112265544', 'Simona', 'Glodean', 'Oradea', '42', 'simona.test@gmail.com', '0478512489'), (NULL, '1870109260036', 'Reka', 'Kovacs', 'Covasna', '32', 'reka.test@gmail.com', '0762485719');
+    INSERT INTO persons2 (id, cnp, firstName, lastName, localitate, numar, email, telefon) VALUES (NULL, '1870109260036', 'Cristian', 'Cozma', 'Cluj-Napoca', '32', 'test@gmail.com', '0547821458'), (NULL, '2901112265544', 'Simona', 'Glodean', 'Oradea', '42', 'simona.test@gmail.com', '0478512489'), (NULL, '2870109260036', 'Reka', 'Kovacs', 'Covasna', '32', 'reka.test@gmail.com', '0762485719');
     `;
     connection.query(sql, function (err, results) {
       if (err) throw err;
@@ -68,7 +68,7 @@ router.get("/person", function (req, res, next) {
   const cnp = req.query.cnp;
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT * FROM persons WHERE cnp=?`;
+    const sql = `SELECT * FROM persons2 WHERE cnp=?`;
     connection.query(sql, [cnp], function (err, results) {
       if (err) throw err;
       connection.release();
