@@ -4,20 +4,29 @@
         "cnp": "1870109260036",
         "firstName": "Cristian",
         "lastName": "Cozma",
-        "localitate": "Ploiesti"
+        "localitate": "Ploiesti",
+        "numar": 11,
+        "email": "test@gmail.com",
+        "telefon": "0642738492"
     },
     {
         "id": "b456",
         "cnp": "2901112265544",
         "firstName": "Reka",
         "lastName": "Kovacs",
-        "localitate": "Borsec"
+        "localitate": "Borsec",
+        "numar": 11,
+        "email": "test@gmail.com",
+        "telefon": "0642738492"
     },
     {
         "id": "c789",
         "cnp": "29001212254433",
         "firstName": "Simona",
         "lastName": "Glodean",
-        "localitate": "Oradea"
+        "localitate": "Oradea",
+        "numar": 11,
+        "email": "test@gmail.com",
+        "telefon": "0642738492"
     }
 ]
