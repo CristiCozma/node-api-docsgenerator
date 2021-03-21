@@ -21,7 +21,7 @@ router.get("/install", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
     const sql = `
-    CREATE TABLE IF NOT EXISTS persons2 (id INT NOT NULL AUTO_INCREMENT, cnp TEXT NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, localitate TEXT NOT NULL, numar SMALLINT NOT NULL, email TEXT NOT NULL, telefon TEXT(10) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
+    CREATE TABLE IF NOT EXISTS persons (id INT NOT NULL AUTO_INCREMENT, cnp TEXT NOT NULL, firstName TEXT NOT NULL, lastName TEXT NOT NULL, localitate TEXT NOT NULL, numar SMALLINT NOT NULL, email TEXT NOT NULL, telefon TEXT(10) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
     `;
     connection.query(sql, function (err, results) {
       if (err) throw err;
@@ -39,7 +39,7 @@ router.get("/populate", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
     const sql = `
-    INSERT INTO persons2 (id, cnp, firstName, lastName, localitate, numar, email, telefon) VALUES (NULL, '1870109260036', 'Cristian', 'Cozma', 'Cluj-Napoca', '32', 'test@gmail.com', '0547821458'), (NULL, '2901112265544', 'Simona', 'Glodean', 'Oradea', '42', 'simona.test@gmail.com', '0478512489'), (NULL, '2870109260036', 'Reka', 'Kovacs', 'Covasna', '32', 'reka.test@gmail.com', '0762485719');
+    INSERT INTO persons (id, cnp, firstName, lastName, localitate, numar, email, telefon) VALUES (NULL, '1870109260036', 'Cristian', 'Cozma', 'Cluj-Napoca', '32', 'test@gmail.com', '0547821458'), (NULL, '2901112265544', 'Simona', 'Glodean', 'Oradea', '42', 'simona.test@gmail.com', '0478512489'), (NULL, '2870109260036', 'Reka', 'Kovacs', 'Covasna', '32', 'reka.test@gmail.com', '0762485719');
     `;
     connection.query(sql, function (err, results) {
       if (err) throw err;
@@ -55,7 +55,7 @@ router.get("/populate", function (req, res, next) {
 router.get("/", function (req, res, next) {
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT id, cnp, firstName, lastName, localitate, numar, email, telefon FROM persons2  limit 10`;
+    const sql = `SELECT id, cnp, firstName, lastName, localitate, numar, email, telefon FROM persons  limit 10`;
     connection.query(sql, function (err, results) {
       if (err) throw err;
       connection.release();
@@ -68,7 +68,7 @@ router.get("/person", function (req, res, next) {
   const cnp = req.query.cnp;
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `SELECT * FROM persons2 WHERE cnp=?`;
+    const sql = `SELECT * FROM persons WHERE cnp=?`;
     connection.query(sql, [cnp], function (err, results) {
       if (err) throw err;
       connection.release();
@@ -91,8 +91,8 @@ router.post("/create", function (req, res, next) {
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `INSERT INTO persons2 (cnp, firstName, lastName, localitate, numar, email, telefon ) VALUES (${cnp}, '${firstName}', '${lastName}', '${localitate}', '${numar}', '${email}', '${telefon}');`;
-    connection.query(sql, [cnp, firstName, lastName, localitate, numar, email, telefon ], function (err, results) {
+    const sql = `INSERT INTO persons (cnp, firstName, lastName, localitate, numar, email, telefon ) VALUES (${cnp}, '${firstName}', '${lastName}', '${localitate}', '${numar}', '${email}', '${telefon}');`;
+    connection.query(sql, [cnp, firstName, lastName, localitate, numar, email, telefon], function (err, results) {
       if (err) throw err;
       const id = results.insertId;
       connection.release();
@@ -135,8 +135,8 @@ router.put("/update", function (req, res, next) {
 
   pool.getConnection(function (err, connection) {
     if (err) throw err;
-    const sql = `UPDATE persons2 SET firstName='${firstName}', lastName='${lastName}', localitate='${localitate}', numar='${numar}', email='${email}', telefon='${telefon}' WHERE cnp='${cnp}'`;
-    connection.query(sql, [firstName, lastName, cnp, localitate, numar, email,  telefon], function (err, results) {
+    const sql = `UPDATE persons SET firstName='${firstName}', lastName='${lastName}', localitate='${localitate}', numar='${numar}', email='${email}', telefon='${telefon}' WHERE cnp='${cnp}'`;
+    connection.query(sql, [firstName, lastName, cnp, localitate, numar, email, telefon], function (err, results) {
       if (err) throw err;
       connection.release();
       res.json({ success: true });
